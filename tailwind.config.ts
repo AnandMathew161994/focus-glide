@@ -61,6 +61,20 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				apple: {
+					blue: 'hsl(var(--apple-blue))',
+					red: 'hsl(var(--apple-red))',
+					orange: 'hsl(var(--apple-orange))',
+					yellow: 'hsl(var(--apple-yellow))',
+					green: 'hsl(var(--apple-green))',
+					gray: 'hsl(var(--apple-gray))',
+					sidebar: 'hsl(var(--apple-sidebar))'
+				},
+				priority: {
+					high: 'hsl(var(--priority-high))',
+					medium: 'hsl(var(--priority-medium))',
+					low: 'hsl(var(--priority-low))'
 				}
 			},
 			borderRadius: {
