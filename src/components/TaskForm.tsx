@@ -126,8 +126,12 @@ export function TaskForm({ open, onClose, onSubmit, initialData, title }: TaskFo
                 <Calendar
                   mode="single"
                   selected={selectedDate}
-                  onSelect={setSelectedDate}
+                  onSelect={(date) => {
+                    setSelectedDate(date);
+                    // Calendar will close automatically when date is selected
+                  }}
                   initialFocus
+                  className="pointer-events-auto"
                 />
               </PopoverContent>
             </Popover>

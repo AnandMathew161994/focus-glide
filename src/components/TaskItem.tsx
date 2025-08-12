@@ -11,9 +11,19 @@ interface TaskItemProps {
   onToggleFlag: (id: string) => void;
   onDelete: (id: string) => void;
   onEdit: (task: Task) => void;
+  selected?: boolean;
+  onToggleSelected?: (id: string) => void;
 }
 
-export function TaskItem({ task, onToggle, onToggleFlag, onDelete, onEdit }: TaskItemProps) {
+export function TaskItem({ 
+  task, 
+  onToggle, 
+  onToggleFlag, 
+  onDelete, 
+  onEdit, 
+  selected = false,
+  onToggleSelected 
+}: TaskItemProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const formatDueDate = (date: string) => {
@@ -26,10 +36,19 @@ export function TaskItem({ task, onToggle, onToggleFlag, onDelete, onEdit }: Tas
 
   return (
     <div
-      className="task-item group"
+      className={`task-item group flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors ${selected ? 'bg-muted/30' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Selection checkbox (if bulk actions enabled) */}
+      {onToggleSelected && (
+        <Checkbox
+          checked={selected}
+          onCheckedChange={() => onToggleSelected(task.id)}
+          className="flex-shrink-0"
+        />
+      )}
+      
       <Checkbox
         checked={task.completed}
         onCheckedChange={() => onToggle(task.id)}
