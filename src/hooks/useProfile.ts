@@ -29,14 +29,17 @@ export function useProfile() {
     if (!user) return;
 
     try {
+      // Set the user context for RLS policies by calling a function that sets the user ID
+      await supabase.rpc('set_claim', { claim: 'sub', value: user.id });
+      
       // First try to fetch existing profile
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code === 'PGRST116') {
+      if (!data && !error) {
         // Profile doesn't exist, create it
         const newProfile = {
           user_id: user.id,
@@ -52,10 +55,15 @@ export function useProfile() {
           .select()
           .single();
 
-        if (createError) throw createError;
-        setProfile(createdProfile);
+        if (createError) {
+          console.error('Error creating profile:', createError);
+        } else {
+          setProfile(createdProfile);
+        }
       } else if (data) {
         setProfile(data);
+      } else if (error) {
+        console.error('Error fetching profile:', error);
       }
     } catch (error) {
       console.error('Error with profile:', error);
