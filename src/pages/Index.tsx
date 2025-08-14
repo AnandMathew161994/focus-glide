@@ -6,6 +6,7 @@ import { useTasks } from '@/hooks/useTasks';
 import { AppSidebar } from '@/components/AppSidebar';
 import { TaskList } from '@/components/TaskList';
 import { TaskForm } from '@/components/TaskForm';
+import { ChatBot } from '@/components/ChatBot';
 import { AuthLayout, UserProfileButton } from '@/components/auth/AuthLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,7 +32,8 @@ const Index = () => {
     clearSelection,
     bulkMarkComplete,
     bulkDelete,
-    isAdmin
+    isAdmin,
+    refreshTasks
   } = useTasks();
 
   const filteredTasks = getFilteredTasks(currentFilter, searchQuery);
@@ -165,6 +167,8 @@ const Index = () => {
           initialData={editingTask || undefined}
           title="Edit Task"
         />
+
+        <ChatBot onTaskCreated={refreshTasks} />
       </div>
     </AuthLayout>
   );
